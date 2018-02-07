@@ -3,10 +3,19 @@
 <head>
   <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
+<script src="../../node_modules/jquery/dist/jquery.js"></script>
+<script>
+  const submitPost = (value) => {
+    $.post('http://127.0.0.1:8080', {url: value.target.value}, function(done){
+      console.log('submitted!');
+    })
+  }
+</script>
 <body>
   Enter a URL here:
-  <form method="POST">
+  <form method="POST" onsubmit = 'submitPost()'>
     <input type="input" name="url"></input>
+    <input type='submit'/>
   </form>
 </body>
 </html>
