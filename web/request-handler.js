@@ -24,18 +24,21 @@ exports.handleRequest = function (req, res) {
   path: '/',
   href: '/' }
   */
-  
+
   const pathName = parsedUrl.pathname;
   let action = httpHelpers.actions[method];
   //routes
   //if action ==> do action
   if (action && req.url === '/') {
-    action('/index.html', res, 'siteAssets');
+    action('/index.html', res, 'siteAssets', req);
     
   } else if (action && req.url === '/styles.css') {
-    action(pathName, res, 'siteAssets');
+    action(pathName, res, 'siteAssets', req, 'test/css');
     
+  } else if (action) {
+    action(pathName, res, 'archivedSites', req);
   }
+  
   //catchall else if for if action & valid url
   
   //else if none of those work
