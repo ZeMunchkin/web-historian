@@ -19,24 +19,25 @@ exports.actions = {
       res.writeHead(200, exports.headers);
       res.end(data);
     });
-    // fs.readFile(path, function(err, data) {
-    //   if (err) { 
-    //     console.error(err); 
-    //     res.writeHead(404);
-    //     res.end();
-    //   } else {
-    //     exports.serveAssets(res, path, function() {
 
-    //     });
-    //   }
   },
   'POST': function(parsedUrl, res, path) {
     console.log('post');
+    //
+    
+    
+    
+    
+    
   },
   'OPTIONS': function(parsedUrl, res, path) {
 
   }
 };
+
+
+
+
 
 exports.serveAssets = function(res, asset, path, callback) {
   // Write some code here that helps serve up your static files!
@@ -48,7 +49,7 @@ exports.serveAssets = function(res, asset, path, callback) {
   
   fs.readFile(path, function (err, data) {
     if (err) {
-      
+      console.error(err);
     } else {
       callback(data);
     }

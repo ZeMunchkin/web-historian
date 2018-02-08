@@ -34,7 +34,20 @@ exports.handleRequest = function (req, res) {
     
   } else if (action && req.url === '/styles.css') {
     action(pathName, res, 'siteAssets');
+    
   }
+  //catchall else if for if action & valid url
+  
+  //else if none of those work
+  //send 404 back
+  
+  
+  
+  //post
+  
+    
+    
+  
   // else if (action && url === '/') {
   //   action('/public/index.html', req, res);
   // }
