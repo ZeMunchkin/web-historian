@@ -74,11 +74,12 @@ exports.downloadUrls = function(urls) {
     // write an fs file in sites folder using html data
       
       if (err) {
-        console.log(err);
-      }
-      // ** confirm 
-      fs.writeFile( `${exports.paths.archivedSites}/${url}`, body, (err) => {
         console.error(err);
+      }
+      fs.writeFile( `${exports.paths.archivedSites}/${url}`, body, (err) => {
+        if (err) {
+          console.error(err);
+        }
       });
     });
     

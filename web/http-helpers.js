@@ -12,25 +12,49 @@ exports.headers = {
 
 exports.actions = {
   //get to home page
-  'GET': function() {
-    console.log('get request');
+  'GET': function(parsedUrl, res, path) {
+    console.log('get');
+    
+    exports.serveAssets(res, parsedUrl, path, (data) => {
+      res.writeHead(200, exports.headers);
+      res.end(data);
+    });
+    // fs.readFile(path, function(err, data) {
+    //   if (err) { 
+    //     console.error(err); 
+    //     res.writeHead(404);
+    //     res.end();
+    //   } else {
+    //     exports.serveAssets(res, path, function() {
+
+    //     });
+    //   }
   },
-  'POST': function() {
+  'POST': function(parsedUrl, res, path) {
     console.log('post');
   },
-  'PUT': function() {
-
-  },
-  'OPTIONS': function() {
+  'OPTIONS': function(parsedUrl, res, path) {
 
   }
 };
 
-exports.serveAssets = function(res, asset, callback) {
+exports.serveAssets = function(res, asset, path, callback) {
   // Write some code here that helps serve up your static files!
   // (Static files are things like html (yours or archived from others...),
   // css, or anything that doesn't change often.)
-
+  
+  //find path of asset
+  var path = archive.paths[path] + asset;
+  
+  fs.readFile(path, function (err, data) {
+    if (err) {
+      
+    } else {
+      callback(data);
+    }
+    
+  });
+  
 };
 
 
