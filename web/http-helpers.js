@@ -17,11 +17,23 @@ exports.actions = {
   'GET': function(parsedUrl, res, path, req, contentType) {
     console.log('get');
     
-    exports.serveAssets(res, parsedUrl, path, (data) => {
-      exports.headers['Content-Type'] = contentType || 'text/html';
-      res.writeHead(200, exports.headers);
-      res.end(data);
+    var fullPath = archive.paths[path] + parsedUrl;
+  
+    fs.readFile(fullPath, function (err, data) {
+      if (err) {
+        exports.respond(res, 404);
+      } else {
+        exports.headers['Content-Type'] = contentType || 'text/html';
+        exports.respond(res, 200, data);
+      }
+      
     });
+    
+    // exports.serveAssets(res, parsedUrl, path, (data) => {
+    //   exports.headers['Content-Type'] = contentType || 'text/html';
+    //   res.writeHead(200, exports.headers);
+    //   res.end(data);
+    // });
 
   },
   
