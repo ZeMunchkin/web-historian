@@ -46,7 +46,10 @@ exports.isUrlInList = function(url, callback) {
 exports.addUrlToList = function(url, callback) {
   exports.isUrlInList(url, function (err, bool) {
     if (!bool) {
-      fs.appendFile(exports.paths.list, url + '\n', callback);
+      exports.readListOfUrls( (err, list) => {
+        list.push(url);
+        fs.writeFile(exports.paths.list, list.join('\n'), callback);
+      });
     } 
   });
 };
@@ -66,6 +69,7 @@ exports.downloadUrls = function(urls) {
   //iterate through array of urls
   urls.forEach( url => {
     // make a GET request to url
+    console.log('url', url);
     request(`http://${url}`, function success (err, response, body) {
     // write an fs file in sites folder using html data
       

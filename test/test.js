@@ -67,8 +67,8 @@ describe('server', function() {
           .expect(302, function (err) {
             if (!err) {
               var fileContents = fs.readFileSync(archive.paths.list, 'utf8');
-              expect(fileContents).to.equal(url + '\n');
-              console.log(" File Contents: " , fileContents);
+              expect(fileContents).to.equal('\n' + url);
+              console.log(' File Contents: ', fileContents);
             }
 
             done(err);
@@ -116,7 +116,7 @@ describe('archive helpers', function() {
 
   describe('#addUrlToList', function () {
     it('should add a url to the list', function (done) {
-      var urlArray = ['example1.com', 'example2.com\n'];
+      var urlArray = ['example1.com', 'example2.com'];
       fs.writeFileSync(archive.paths.list, urlArray.join('\n'));
 
       archive.addUrlToList('someurl.com', function (err) {

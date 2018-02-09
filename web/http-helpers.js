@@ -17,16 +17,12 @@ exports.actions = {
   'GET': function(parsedUrl, res, path, req, contentType) {
     console.log('get');
     
-    var fullPath = archive.paths[path] + parsedUrl;
-  
-    fs.readFile(fullPath, function (err, data) {
+    exports.serveAssets(res, parsedUrl, path, (err, data) => {
       if (err) {
         exports.respond(res, 404);
       } else {
-        exports.headers['Content-Type'] = contentType || 'text/html';
         exports.respond(res, 200, data);
       }
-      
     });
     
     // exports.serveAssets(res, parsedUrl, path, (data) => {
@@ -61,7 +57,7 @@ exports.actions = {
           
         // if yes
         } else if (bool) {
-          exports.headers['Location'] = `http://127.0.0.1:8080${archive.paths.archivedSites}/${website}`;
+          exports.headers['Location'] = `http://127.0.0.1:8080/${website}`;
           exports.respond(res, 302);
           delete exports.headers['Location'];
         // if no
@@ -120,21 +116,16 @@ exports.respond = function (res, statusCode, data, contentType) {
 
 
 
-exports.serveAssets = function(res, asset, path, callback) {
+exports.serveAssets = function(res, asset, pathIndex, callback) {
   // Write some code here that helps serve up your static files!
   // (Static files are things like html (yours or archived from others...),
   // css, or anything that doesn't change often.)
   
   //find path of asset
-  var path = archive.paths[path] + asset;
+  var path = archive.paths[pathIndex] + asset;
   
   fs.readFile(path, function (err, data) {
-    if (err) {
-      console.error(err);
-    } else {
-      callback(data);
-    }
-    
+    callback(err, data);
   });
   
 };
