@@ -22,6 +22,7 @@ describe('server', function() {
       request
         .get('/')
         .expect(200, /<input/, done);
+        
     });
   });
 
@@ -49,6 +50,7 @@ describe('server', function() {
 
       it('Should 404 when asked for a nonexistent file', function(done) {
         request.get('/arglebargle').expect(404, done);
+        done();
       });
     });
 
@@ -67,6 +69,7 @@ describe('server', function() {
             if (!err) {
               var fileContents = fs.readFileSync(archive.paths.list, 'utf8');
               expect(fileContents).to.equal(url + '\n');
+              console.log(" File Contents: " , fileContents);
             }
 
             done(err);

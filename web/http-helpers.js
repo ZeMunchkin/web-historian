@@ -18,7 +18,7 @@ exports.actions = {
     console.log('get');
     
     exports.serveAssets(res, parsedUrl, path, (data) => {
-      exports.headers = contentType || 'text/html';
+      exports.headers['Content-Type'] = contentType || 'text/html';
       res.writeHead(200, exports.headers);
       res.end(data);
     });
@@ -49,8 +49,9 @@ exports.actions = {
           
         // if yes
         } else if (bool) {
-          exports.respond(res, 302, website);
-          
+          exports.headers['Location'] = `http://127.0.0.1:8080${archive.paths.archivedSites}/${website}`;
+          exports.respond(res, 302);
+          delete exports.headers['Location'];
         // if no
         } else {
           //is url already on the list?
@@ -61,8 +62,9 @@ exports.actions = {
             //if yes, write 303 response to make them 
             //load working on it page
             } else if (bool) {
-              exports.respond(res, 302, 'loading.html');
-              
+              exports.headers['Location'] = 'http://127.0.0.1:8080/loading.html';
+              exports.respond(res, 302);
+              delete exports.headers['Location'];
             //if not on the list
             } else {
               //add url to list
@@ -71,7 +73,9 @@ exports.actions = {
                   exports.respond(res, 404);
                 //write response
                 } else {
-                  exports.respond(res, 302, 'loading.html');
+                  exports.headers['Location'] = 'http://127.0.0.1:8080/loading.html';
+                  exports.respond(res, 302);
+                  delete exports.headers['Location'];
                 }
               });
             }

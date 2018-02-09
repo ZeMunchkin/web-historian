@@ -46,11 +46,7 @@ exports.isUrlInList = function(url, callback) {
 exports.addUrlToList = function(url, callback) {
   exports.isUrlInList(url, function (err, bool) {
     if (!bool) {
-      exports.readListOfUrls( function (err, dataArray ) {
-        dataArray.push(url);
-        var stringData = dataArray.join('\n');
-        fs.writeFile(exports.paths.list, stringData, callback);
-      });
+      fs.appendFile(exports.paths.list, url + '\n', callback);
     } 
   });
 };

@@ -33,10 +33,16 @@ exports.handleRequest = function (req, res) {
     action('/index.html', res, 'siteAssets', req);
     
   } else if (action && req.url === '/styles.css') {
-    action(pathName, res, 'siteAssets', req, 'test/css');
+    action(pathName, res, 'siteAssets', req, 'text/css');
+    
+  } else if (action && req.url === '/loading.html') {
+    action(pathName, res, 'siteAssets', req);
     
   } else if (action) {
     action(pathName, res, 'archivedSites', req);
+    
+  } else {
+    httpHelpers.respond(res, 404);
   }
   
   //catchall else if for if action & valid url
